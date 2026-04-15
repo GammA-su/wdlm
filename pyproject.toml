@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wdlm"
+version = "0.1.0"
+description = "Synthetic data pipeline for World-Delta Language Modeling"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26.4",
+  "pydantic>=2.8.2",
+  "PyYAML>=6.0.2",
+  "torch>=2.7.0",
+  "typer>=0.12.5",
+]
+
+[project.scripts]
+wdlm = "wdlm.cli:app"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3.3",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wdlm"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'win32' or sys_platform == 'linux'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true

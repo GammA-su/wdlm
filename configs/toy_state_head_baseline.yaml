@@ -1,0 +1,30 @@
+model_type: state_head_baseline
+seed: 42
+device: auto
+output_dir: runs/toy_state_head_baseline
+best_metric: per_field_macro_accuracy
+data:
+  train_path: data/toy_world/splits/train.jsonl
+  val_path: data/toy_world/splits/val.jsonl
+  split_dir: data/toy_world/splits
+  max_vocab_size: 512
+  max_seq_len: 48
+  max_paraphrases: 3
+model:
+  d_model: 128
+  n_heads: 4
+  n_layers: 4
+  ffn_dim: 256
+  dropout: 0.1
+  max_seq_len: 48
+  state_dim: 128
+optim:
+  batch_size: 16
+  lr: 0.001
+  epochs: 30
+  max_steps: 500
+loss:
+  text: 1.0
+  state: 1.0
+  paraphrase: 0.0
+  contrastive: 0.0
